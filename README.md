@@ -1,4 +1,10 @@
-# build-your-own-navigation
+# Build Your Own Navigation
+
+This is a proof of concept project.
+
+I had a few hours available to show how non-developers could have more control over a website's navigation menu. By customising components that developers build.
+
+In production, there would be an API which stores the Builder data and then an endpoint to fill the Result section.
 
 ## Project setup
 ```
@@ -9,16 +15,3 @@ yarn install
 ```
 yarn serve
 ```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
