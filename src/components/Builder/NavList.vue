@@ -5,12 +5,14 @@
             <div class="block--details-form--header">
                 <label for="listHeaderTextField">Header:</label>
                 <input
+                    @input="debounceSaveBlock"
                     id="listHeaderTextField"
                     type="text"
                     v-model="header.text"
                 />
                 <label for="listHeaderHrefField">HREF:</label>
                 <input
+                    @input="debounceSaveBlock"
                     id="listHeaderHrefField"
                     type="text"
                     v-model="header.href"
@@ -18,6 +20,7 @@
             </div>
             <label for="listNumberOfItemsField">Number of list items:</label>
             <input
+                @input="debounceSaveBlock"
                 id="listNumberOfItemsField"
                 min="1"
                 type="number"
@@ -31,23 +34,25 @@
                         v-for="item in parseInt(numberOfListItems)"
                         :key="item"
                         :itemNumber="item"
+                        :saveBlock="saveBlock"
                         ref="listItems"
                     />
                 </ul>
             </div>
         </div>
-        <button
-            @click.prevent="saveBlock"
-        >Save</button>
     </div>
 </template>
 
 <script>
 import Vue from 'vue'
 
+import DebounceMixin from '../../mixins/debounce'
 import NavListItem from './NavListItem'
 
 export default {
+    mixins: [
+        DebounceMixin
+    ],
     components: {
         NavListItem
     },

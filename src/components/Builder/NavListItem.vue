@@ -4,12 +4,14 @@
         <span class="item--form--fields">
             <label for="listItemLabelField">Item Label:</label>
             <input
+                @input="debounceSaveBlock"
                 id="listItemLabelField"
                 type="text"
                 v-model="label"
             />
             <label for="listItemlHrefField">Item HREF:</label>
             <input
+                @input="debounceSaveBlock"
                 id="listItemlHrefField"
                 type="text"
                 v-model="href"
@@ -19,11 +21,20 @@
 </template>
 
 <script>
+import DebounceMixin from '../../mixins/debounce'
+
 export default {
+    mixins: [
+        DebounceMixin
+    ],
     props: {
         itemNumber: {
             default: null,
             type: Number
+        },
+        saveBlock: {
+            default: null,
+            type: Function
         }
     },
     data() {
