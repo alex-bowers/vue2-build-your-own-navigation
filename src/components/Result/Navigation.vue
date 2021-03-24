@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import NavImage from "./NavImage";
-import NavList from "./NavList";
+import NavImage from "./NavImage"
+import NavList from "./NavList"
 
 export default {
     components: {

@@ -63,7 +63,7 @@ export default {
     },
     methods: {
         getBlockKey(block) {
-            return `block-${block - 1}`;
+            return `block-${block - 1}`
         },
         isSelectedButton(block, type) {
             const currentBlock = this.blocksContent[this.getBlockKey(block)]

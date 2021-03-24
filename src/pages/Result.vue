@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Navigation from "../components/Result/Navigation";
+import Navigation from "../components/Result/Navigation"
 
 export default {
     components: {
