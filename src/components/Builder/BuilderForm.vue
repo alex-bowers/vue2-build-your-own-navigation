@@ -15,7 +15,14 @@
             :key="column"
             class="column--container"
         >
-            <ColumnContent :columnNumber="column"/>
+            <details>
+                <summary>
+                    <h3
+                        class="column--container--heading"
+                    >Column {{ column }}</h3>
+                </summary>
+                <ColumnContent :columnNumber="column"/>
+            </details>
         </div>
     </form>
 </template>
@@ -51,5 +58,9 @@ export default {
     padding-bottom: 0.5rem;
     padding-top: 1rem;
     border-top: 1px solid grey;
+}
+
+.column--container--heading {
+    display: inline;
 }
 </style>

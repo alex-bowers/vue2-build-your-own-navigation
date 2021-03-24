@@ -1,6 +1,5 @@
 <template>
-    <div>
-        <h3>Column {{ $props.columnNumber }}</h3>
+    <div class="column-content">
         <label for="blocksInColumnField">Number of Blocks: </label>
         <input
             type="number"
@@ -78,6 +77,10 @@ export default {
 </script>
 
 <style scoped>
+.column-content {
+    margin-top: 0.5rem;
+}
+
 .column--blocks {
     display: flex;
     flex-wrap: wrap;
