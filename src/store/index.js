@@ -10,12 +10,30 @@ export default new Vuex.Store({
         ]
     },
     mutations: {
+        addBlockToColumn(state, payload) {
+            const chosenColumnKeys = Object.keys(state.columnsContent[payload - 1])
+            const lastBlockString = chosenColumnKeys[chosenColumnKeys.length - 1]
+            let newBlockString = 'block-1'
+            if (lastBlockString) {
+                let previousBlockNumber = parseInt(
+                    lastBlockString.slice(lastBlockString.length - 1)
+                    , 10
+                )
+
+                newBlockString = `block-${previousBlockNumber + 1}`
+            }
+
+            Vue.set(state.columnsContent[payload - 1], newBlockString, {})
+        },
         addColumnObjects(state, payload) {
             for (let i = 1; i < payload; i++) {
                 if (!state.columnsContent[i]) {
                     Vue.set(state.columnsContent, i, {})
                 }
             }
+        },
+        removeBlockFromColumn(state, payload) {
+            Vue.delete(state.columnsContent[payload.column - 1], payload.block)
         },
         removeColumnObjects(state, payload) {
             Vue.set(state, 'columnsContent', state.columnsContent.splice(0, payload))

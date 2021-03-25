@@ -1,36 +1,38 @@
 <template>
     <div class="column-content">
-        <label for="blocksInColumnField">Number of Blocks: </label>
-        <input
-            type="number"
-            id="blocksInColumnField"
-            min="1"
-            v-model="numberOfBlocks"
-        />
+        <button
+            @click.prevent="addNewBlock"
+        >+ Add new block</button>
         <div
-            v-if="numberOfBlocks > 0"
+            v-if="hasBlocks"
             class="column--blocks"
         >
             <div
-                v-for="block in parseInt(numberOfBlocks)"
-                :key="block"
+                v-for="(block, columnIndex) in currentBlocksInColumn"
+                :key="columnIndex"
                 class="column--blocks--block"
             >
-                <h4>Block {{ block }}</h4>
+                <span class="block--header">
+                    <h4>{{ createBlockHeader(columnIndex) }}</h4>
+                    <button
+                        v-if="columnIndex !== 'block-1'"
+                        @click.prevent="removeBlock(columnIndex)"
+                    >Remove</button>
+                </span>
                 <button
-                    @click.prevent="selectBlockChoice('NavImage', getBlockKey(block))"
-                    :class="{ 'selected': isSelectedButton(block, 'NavImage') }"
+                    @click.prevent="selectBlockChoice('NavImage', columnIndex)"
+                    :class="{ 'selected': isSelectedButton(columnIndex, 'NavImage') }"
                     class="block--button block--button-image"
                 >Image</button>
                 <button
-                    @click.prevent="selectBlockChoice('NavList', getBlockKey(block))"
-                    :class="{ 'selected': isSelectedButton(block, 'NavList') }"
+                    @click.prevent="selectBlockChoice('NavList', columnIndex)"
+                    :class="{ 'selected': isSelectedButton(columnIndex, 'NavList') }"
                     class="block--button block--button-list"
                 >List</button>
                 <Component
-                    :is="blocksContent[getBlockKey(block)]"
+                    :is="blocksContent[columnIndex]"
                     :columnNumber="columnNumber"
-                    :blockNumber="getBlockKey(block)"
+                    :blockNumber="columnIndex"
                 />
             </div>
         </div>
@@ -56,18 +58,37 @@ export default {
     },
     data() {
         return {
-            blocksContent: {},
-            numberOfBlocks: 1
+            blocksContent: {}
+        }
+    },
+    computed: {
+        currentBlocksInColumn() {
+            return this.$store.state.columnsContent[this.$props.columnNumber - 1]
+        },
+        hasBlocks() {
+            return Object.keys(this.currentBlocksInColumn).length
         }
     },
     methods: {
-        getBlockKey(block) {
-            return `block-${block - 1}`
+        addNewBlock() {
+            this.$store.commit('addBlockToColumn', this.$props.columnNumber)
+        },
+        createBlockHeader(blockString) {
+            const removeDash = blockString.replace('-', ' ')
+
+            return removeDash.charAt(0).toUpperCase() + removeDash.slice(1)
         },
         isSelectedButton(block, type) {
-            const currentBlock = this.blocksContent[this.getBlockKey(block)]
+            const currentBlock = this.blocksContent[block]
 
             return currentBlock && currentBlock === type
+        },
+        removeBlock(block) {
+            Vue.delete(this.blocksContent, block)
+            this.$store.commit('removeBlockFromColumn', {
+                block: block,
+                column: this.$props.columnNumber
+            })
         },
         selectBlockChoice(type, block) {
             Vue.set(this.blocksContent, block, type)
@@ -95,6 +116,15 @@ export default {
     margin-top: 1rem;
 }
 
+.block--header {
+    display: flex;
+    margin-bottom: 0.5rem;
+}
+
+.block--header button {
+    margin-left: 2rem;
+}
+
 .block--button {
     border: none;
     border-radius: 0.5rem;
@@ -108,9 +138,5 @@ export default {
 
 .block--button-image {
     margin-right: 1rem;
-}
-
-.block--button-list {
-
 }
 </style>
