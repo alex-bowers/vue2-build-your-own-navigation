@@ -15,7 +15,6 @@
                 <span class="block--header">
                     <h4>{{ createBlockHeader(columnIndex) }}</h4>
                     <button
-                        v-if="columnIndex !== 'block-1'"
                         @click.prevent="removeBlock(columnIndex)"
                     >Remove</button>
                 </span>
