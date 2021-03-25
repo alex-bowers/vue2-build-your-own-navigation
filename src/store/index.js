@@ -18,9 +18,7 @@ export default new Vuex.Store({
             }
         },
         removeColumnObjects(state, payload) {
-            while (payload !== state.columnsContent.length) {
-                state.columnsContent.splice(state.columnsContent.length, 1)
-            }
+            Vue.set(state, 'columnsContent', state.columnsContent.splice(0, payload))
         },
         setColumnsCount: (state, payload) => state.columns = payload,
         updateColumnContent(state, payload) {
