@@ -1,8 +1,19 @@
 <template>
     <div class="column-content">
-        <button
-            @click.prevent="addNewBlock"
-        >+ Add new block</button>
+        <div class="column--actions">
+            <div class="column--actions--input">
+                <label for="columnPositionField">Postion: </label>
+                <input
+                    @input="updateColumnPosition"
+                    id="columnPositionField"
+                    type="number"
+                    v-model="position"
+                />
+            </div>
+            <button
+                @click.prevent="addNewBlock"
+            >+ Add new block</button>
+        </div>
         <div
             v-if="hasBlocks"
             class="column--blocks"
@@ -57,16 +68,20 @@ export default {
     },
     data() {
         return {
-            blocksContent: {}
+            blocksContent: {},
+            position: null
         }
     },
     computed: {
         currentBlocksInColumn() {
-            return this.$store.state.columnsContent[this.$props.columnNumber - 1]
+            return this.$store.state.columnsContent[this.$props.columnNumber - 1].blocks
         },
         hasBlocks() {
             return Object.keys(this.currentBlocksInColumn).length
         }
+    },
+    mounted() {
+        this.position = this.$props.columnNumber
     },
     methods: {
         addNewBlock() {
@@ -91,6 +106,12 @@ export default {
         },
         selectBlockChoice(type, block) {
             Vue.set(this.blocksContent, block, type)
+        },
+        updateColumnPosition() {
+            this.$store.commit('updateColumnPosition', {
+                column: this.$props.columnNumber,
+                newPosition: this.position
+            })
         }
     }
 }
@@ -99,6 +120,14 @@ export default {
 <style scoped>
 .column-content {
     margin-top: 0.5rem;
+}
+
+.column--actions {
+    display: block;
+}
+
+.column--actions--input {
+    margin-bottom: 1rem;
 }
 
 .column--blocks {

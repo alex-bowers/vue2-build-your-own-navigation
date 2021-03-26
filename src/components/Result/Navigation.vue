@@ -3,12 +3,12 @@
         class="navigation"
     >
         <div
-            v-for="(column, index) in columnsContent"
+            v-for="(column, index) in orderColumns(columnsContent)"
             :key="index"
             class="navigation--column"
         >
             <Component
-                v-for="(block, index) in orderBlocks(column)"
+                v-for="(block, index) in orderBlocks(column.blocks)"
                 :key="index"
                 :block="block"
                 :is="block.type"
@@ -33,17 +33,21 @@ export default {
     },
     methods: {
         orderBlocks(blocks) {
-            return Object.values(blocks).sort((a, b) => {
-                if (a.position < b.position) {
-                    return -1
-                }
+            return Object.values(blocks).sort(this.sortArray)
+        },
+        orderColumns(columns) {
+            return Object.values(columns).sort(this.sortArray)
+        },
+        sortArray(a, b) {
+            if (a.position < b.position) {
+                return -1
+            }
 
-                if (a.position > b.position) {
-                    return 1
-                }
+            if (a.position > b.position) {
+                return 1
+            }
 
-                return 0
-            })
+            return 0
         }
     }
 }
