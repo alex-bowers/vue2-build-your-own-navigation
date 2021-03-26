@@ -1,5 +1,12 @@
 <template>
     <div class="block--component">
+        <label for="blockPositionField">Postion: </label>
+        <input
+            @input="debounceSaveBlock"
+            id="blockPositionField"
+            type="number"
+            v-model="position"
+        />
         <h5>List</h5>
         <div class="block--details-form">
             <div class="block--details-form--header">
@@ -74,8 +81,15 @@ export default {
             },
             listContent: {},
             numberOfListItems: 1,
+            position: null,
             type: 'NavList',
         }
+    },
+    mounted() {
+        this.position = parseInt(
+            this.$props.blockNumber.slice(this.$props.blockNumber.length - 1)
+            , 10
+        )
     },
     methods: {
         saveBlock() {

@@ -1,5 +1,12 @@
 <template>
     <div class="block--component">
+        <label for="blockPositionField">Postion: </label>
+        <input
+            @input="debounceSaveBlock"
+            id="blockPositionField"
+            type="number"
+            v-model="position"
+        />
         <h5>Image</h5>
         <div class="block--details-form">
             <label for="imageUrlField">URL:</label>
@@ -48,9 +55,16 @@ export default {
         return {
             altText: '',
             href: '',
+            position: null,
             type: 'NavImage',
             url: ''
         }
+    },
+    mounted() {
+        this.position = parseInt(
+            this.$props.blockNumber.slice(this.$props.blockNumber.length - 1)
+            , 10
+        )
     },
     methods: {
         saveBlock() {

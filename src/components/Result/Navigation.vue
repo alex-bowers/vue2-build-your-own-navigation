@@ -8,7 +8,7 @@
             class="navigation--column"
         >
             <Component
-                v-for="(block, index) in column"
+                v-for="(block, index) in orderBlocks(column)"
                 :key="index"
                 :block="block"
                 :is="block.type"
@@ -29,6 +29,21 @@ export default {
     computed: {
         columnsContent() {
             return this.$store.state.columnsContent
+        }
+    },
+    methods: {
+        orderBlocks(blocks) {
+            return Object.values(blocks).sort((a, b) => {
+                if (a.position < b.position) {
+                    return -1
+                }
+
+                if (a.position > b.position) {
+                    return 1
+                }
+
+                return 0
+            })
         }
     }
 }
