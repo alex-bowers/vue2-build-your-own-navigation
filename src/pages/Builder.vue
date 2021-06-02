@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import BuilderForm from '../components//Builder/BuilderForm'
+import BuilderForm from '../components/Builder/BuilderForm'
 
 export default {
     components: {
