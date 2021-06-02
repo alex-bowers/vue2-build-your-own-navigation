@@ -1,6 +1,9 @@
 <template>
     <li class="item--form">
         <span class="item--form--header">Item {{ itemNumber }}</span>
+        <button
+            @click.prevent="toggleListButton"
+        >{{ actionLabel }}</button>
         <span class="item--form--fields">
             <label for="listItemLabelField">Item Label:</label>
             <input
@@ -9,17 +12,18 @@
                 type="text"
                 v-model="label"
             />
-            <label for="listItemlHrefField">Item HREF:</label>
+            <label
+                v-if="!isEditingSubList"
+                for="listItemlHrefField"
+            >Item HREF:</label>
             <input
+                v-if="!isEditingSubList"
                 @input="debounceSaveBlock"
                 id="listItemlHrefField"
                 type="text"
                 v-model="href"
             />
         </span>
-        <button
-            @click.prevent="toggleListButton"
-        >{{ actionLabel }}</button>
         <SubListForm
             v-if="isEditingSubList"
             :list="subList"

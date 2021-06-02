@@ -9,7 +9,13 @@
                 :key="index"
             >
                 <a
-                    :class="{ 'has-sub-menu': item.subList }"
+                    v-if="item.subList"
+                    class="item--link has-sub-menu"
+                >
+                    {{ item.label }}
+                </a>
+                <a
+                    v-else
                     :href="item.href"
                     class="item--link"
                 >
@@ -52,7 +58,8 @@ ul {
 }
 
 ul li {
-    position:relative;
+    display: flex;
+    position: relative;
 }
 
 ul li:hover {
@@ -72,6 +79,7 @@ ul li:hover .item--link.has-sub-menu::before {
     color: white;
     font-size: 0.9375rem;
     line-height: 1.62;
+    width: 100%;
 }
 
 .item--link.has-sub-menu::after,
