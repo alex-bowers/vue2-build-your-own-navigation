@@ -104,7 +104,7 @@ export default {
                     for (const key in this.listContent) {
                         if (Object.prototype.hasOwnProperty.call(this.listContent, key)) {
                             if (key > this.numberOfListItems)
-                                delete this.listContent[key]
+                                Vue.delete(this.listContent, key)
                         }
                     }
                 } else {
