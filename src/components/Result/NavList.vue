@@ -8,7 +8,11 @@
                 v-for="(item, index) in $props.block.listContent"
                 :key="index"
             >
-                <a :href="item.href">
+                <a
+                    :class="{ 'has-sub-menu': item.subList }"
+                    :href="item.href"
+                    class="item--link"
+                >
                     {{ item.label }}
                 </a>
             </li>
@@ -47,13 +51,49 @@ ul {
     padding-inline-start: 0;
 }
 
-ul a {
+ul li {
+    position:relative;
+}
+
+ul li:hover {
+    cursor: pointer;
+}
+
+ul li:hover .item--link {
+    color: #0067a9;
+}
+
+ul li:hover .item--link.has-sub-menu::after,
+ul li:hover .item--link.has-sub-menu::before {
+    background: #0067a9;
+}
+
+.item--link {
     color: white;
     font-size: 0.9375rem;
     line-height: 1.62;
 }
 
-ul a:hover {
-    color: #0067a9;
+.item--link.has-sub-menu::after,
+.item--link.has-sub-menu::before {
+    content: '';
+    background: white;
+    display: inline-block;
+    height: 2px;
+    margin-top: -1px;
+    position: absolute;
+    top: 50%;
+    width: 6px;
+    right: 15%;
+}
+
+.item--link.has-sub-menu::after {
+    transform-origin: 6px 50%;
+    transform: rotate(-45deg);
+}
+
+.item--link.has-sub-menu::before {
+    transform-origin: 6px 50%;
+    transform: rotate(45deg);
 }
 </style>
