@@ -5,12 +5,14 @@
             <div class="list--details-form--header">
                 <label for="subListHeaderTextField">Header:</label>
                 <input
+                    @input="debounceSaveBlock"
                     id="subListHeaderTextField"
                     type="text"
                     v-model="header.text"
                 />
                 <label for="subListHeaderHrefField">HREF:</label>
                 <input
+                    @input="debounceSaveBlock"
                     id="subListHeaderHrefField"
                     type="text"
                     v-model="header.href"
@@ -18,6 +20,7 @@
             </div>
             <label for="subListNumberOfItemsField">Number of list items:</label>
             <input
+                @input="debounceSaveBlock"
                 id="subListNumberOfItemsField"
                 min="1"
                 type="number"
@@ -36,12 +39,14 @@
                         <span class="item--form--fields">
                             <label for="listItemLabelField">Item Label:</label>
                             <input
+                                @input="debounceSaveBlock"
                                 id="listItemLabelField"
                                 type="text"
                                 v-model="listContent[index].label"
                             />
                             <label for="listItemlHrefField">Item HREF:</label>
                             <input
+                                @input="debounceSaveBlock"
                                 id="listItemlHrefField"
                                 type="text"
                                 v-model="listContent[index].href"
@@ -51,14 +56,18 @@
                 </ul>
             </div>
         </div>
-        <button @click.prevent="saveList">Test</button>
     </div>
 </template>
 
 <script>
-import Vue from "vue";
+import Vue from "vue"
+
+import DebounceMixin from '../../mixins/debounce'
 
 export default {
+    mixins: [
+        DebounceMixin
+    ],
     props: {
         saveSubList: {
             default: null,
@@ -104,7 +113,7 @@ export default {
         }
     },
     methods: {
-        saveList() {
+        saveBlock() {
             this.saveSubList(this.$data)
         }
     }
