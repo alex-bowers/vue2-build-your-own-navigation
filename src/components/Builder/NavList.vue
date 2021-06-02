@@ -100,10 +100,19 @@ export default {
                     href
                 } = this.$refs.listItems[i]
 
-                Vue.set(this.listContent, itemNumber, {
-                    label,
-                    href
-                })
+                if (Object.keys(this.listContent).length > this.numberOfListItems) {
+                    for (const key in this.listContent) {
+                        if (Object.prototype.hasOwnProperty.call(this.listContent, key)) {
+                            if (key > this.numberOfListItems)
+                                delete this.listContent[key]
+                        }
+                    }
+                } else {
+                    Vue.set(this.listContent, itemNumber, {
+                        label,
+                        href
+                    })
+                }
 
                 this.$store.commit('updateColumnContent', {
                     block: this.$props.blockNumber,
