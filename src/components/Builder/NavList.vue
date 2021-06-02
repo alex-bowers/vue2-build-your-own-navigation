@@ -95,9 +95,10 @@ export default {
         saveBlock() {
             for (let i = 0; i < this.$refs.listItems.length; i++) {
                 const {
+                    href,
                     itemNumber,
                     label,
-                    href
+                    subList
                 } = this.$refs.listItems[i]
 
                 if (Object.keys(this.listContent).length > this.numberOfListItems) {
@@ -109,8 +110,9 @@ export default {
                     }
                 } else {
                     Vue.set(this.listContent, itemNumber, {
+                        href,
                         label,
-                        href
+                        subList
                     })
                 }
 

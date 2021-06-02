@@ -17,16 +17,28 @@
                 v-model="href"
             />
         </span>
+        <button
+            @click.prevent="isEditingSubList = !isEditingSubList"
+        >Add Sub List</button>
+        <SubListForm
+            v-if="isEditingSubList"
+            :list="subList"
+            :saveSubList="saveSubList"
+        />
     </li>
 </template>
 
 <script>
 import DebounceMixin from '../../mixins/debounce'
+import SubListForm from './SubListForm'
 
 export default {
     mixins: [
         DebounceMixin
     ],
+    components: {
+        SubListForm
+    },
     props: {
         itemNumber: {
             default: null,
@@ -40,7 +52,15 @@ export default {
     data() {
         return {
             href: '',
-            label: ''
+            isEditingSubList: false,
+            label: '',
+            subList: {}
+        }
+    },
+    methods: {
+        saveSubList(list) {
+            this.subList = list
+            this.saveBlock()
         }
     }
 }
