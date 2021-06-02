@@ -18,8 +18,8 @@
             />
         </span>
         <button
-            @click.prevent="isEditingSubList = !isEditingSubList"
-        >Add Sub List</button>
+            @click.prevent="toggleListButton"
+        >{{ actionLabel }}</button>
         <SubListForm
             v-if="isEditingSubList"
             :list="subList"
@@ -54,13 +54,27 @@ export default {
             href: '',
             isEditingSubList: false,
             label: '',
-            subList: {}
+            subList: null
+        }
+    },
+    computed: {
+        actionLabel() {
+            return this.isEditingSubList
+                ? 'Remove Sub List'
+                : 'Add Sub List'
         }
     },
     methods: {
         saveSubList(list) {
             this.subList = list
             this.saveBlock()
+        },
+        toggleListButton() {
+            this.isEditingSubList = !this.isEditingSubList
+
+            if (!this.isEditingSubList) {
+                this.saveSubList(null)
+            }
         }
     }
 }
