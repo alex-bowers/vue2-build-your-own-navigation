@@ -72,6 +72,7 @@ export default {
         justify-content: space-evenly;
     }
     .navigation--column {
+        position: relative;
         width: 25%;
     }
 }

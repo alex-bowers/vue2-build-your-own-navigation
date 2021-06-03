@@ -116,12 +116,7 @@ ul li:hover .item--link.has-sub-menu::before {
     background: #0067a9;
 }
 
-.nav-list {
-    position: relative;
-}
-
 .nav-list--grouped-items {
-    position: relative;
     height: 100%;
 }
 
@@ -132,14 +127,16 @@ ul li:hover .item--link.has-sub-menu::before {
 
 .nav-list--grouped-items--sub {
     position: absolute;
+    bottom: 0;
     background-color: #03a9f4;
     left: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overflow: hidden;
     right: 0;
     top: 0;
     width: 100%;
-    overflow: hidden;
-    overflow-x: hidden;
-    overflow-y: auto;
+    z-index: 1;
 }
 
 .item--header {
