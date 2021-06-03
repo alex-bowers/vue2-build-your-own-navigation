@@ -68,6 +68,10 @@ export default {
     position: relative;
 }
 
+.navigation--column + .navigation--column {
+    border-top: 1px solid #9adcfa;
+    padding-top: 1rem;
+}
 
 @media (min-width: 1024px) {
     .navigation {
@@ -75,8 +79,14 @@ export default {
         flex-wrap: nowrap;
         justify-content: space-evenly;
     }
+
     .navigation--column {
         width: 25%;
+    }
+
+    .navigation--column + .navigation--column {
+        border-top: none;
+        padding-top: 0;
     }
 }
 </style>
