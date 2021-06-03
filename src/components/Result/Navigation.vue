@@ -64,6 +64,10 @@ export default {
     padding: 1rem;
 }
 
+.navigation--column {
+    position: relative;
+}
+
 
 @media (min-width: 1024px) {
     .navigation {
@@ -72,7 +76,6 @@ export default {
         justify-content: space-evenly;
     }
     .navigation--column {
-        position: relative;
         width: 25%;
     }
 }
