@@ -140,7 +140,7 @@ export default {
 }
 
 .column--blocks--block {
-    min-width: 300px;
+    min-width: 18.75rem;
     margin-top: 1rem;
 }
 
@@ -157,7 +157,7 @@ export default {
     border: none;
     border-radius: 0.5rem;
     padding: 0.5rem;
-    width: 100px;
+    width: 6.25rem;
 }
 
 .block--button.selected {
