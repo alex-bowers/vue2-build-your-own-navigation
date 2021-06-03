@@ -167,8 +167,8 @@ ul li:hover .item--link.has-sub-menu::before {
 
 .item--header.has-main-menu::after,
 .item--header.has-main-menu::before {
-    left: 0;
-    top: 10%;
+    left: 0.125rem;
+    top: 0.625rem;
     transform-origin: 0px 50%;
 }
 
