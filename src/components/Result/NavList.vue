@@ -3,26 +3,56 @@
         <a :href="$props.block.header.href">
             <h3>{{ $props.block.header.text }}</h3>
         </a>
-        <ul>
-            <li
-                v-for="(item, index) in $props.block.listContent"
-                :key="index"
-            >
-                <a
-                    v-if="item.subList"
-                    class="item--link has-sub-menu"
+        <div class="grouped-items">
+            <div class="grouped-items--main">
+                <ul>
+                    <li
+                        v-for="(item, index) in $props.block.listContent"
+                        :key="index"
+                    >
+                        <a
+                            v-if="item.subList"
+                            @click.prevent="toggleSubList(item.subList)"
+                            class="item--link has-sub-menu"
+                        >
+                            {{ item.label }}
+                        </a>
+                        <a
+                            v-else
+                            :href="item.href"
+                            class="item--link"
+                        >
+                            {{ item.label }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <transition name="slide">
+                <div
+                    v-if="chosenSubList"
+                    class="grouped-items--sub"
                 >
-                    {{ item.label }}
-                </a>
-                <a
-                    v-else
-                    :href="item.href"
-                    class="item--link"
-                >
-                    {{ item.label }}
-                </a>
-            </li>
-        </ul>
+                    <a @click.prevent="toggleSubList(null)">
+                        <h4 class="item--header has-main-menu">
+                            {{ chosenSubList.header.text }}
+                        </h4>
+                    </a>
+                    <ul>
+                        <li
+                            v-for="(item, index) in chosenSubList.listContent"
+                            :key="index"
+                        >
+                            <a
+                                :href="item.href"
+                                class="item--link"
+                            >
+                                {{ item.label }}
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </transition>
+        </div>
     </div>
 </template>
 
@@ -32,6 +62,16 @@ export default {
         block: {
             default: null,
             type: Object
+        }
+    },
+    data() {
+        return {
+            chosenSubList: null,
+        }
+    },
+    methods: {
+        toggleSubList(list) {
+            this.chosenSubList = list
         }
     }
 }
@@ -69,10 +109,33 @@ ul li:hover {
 ul li:hover .item--link {
     color: #0067a9;
 }
-
+.item--header.has-main-menu:hover::after,
+.item--header.has-main-menu:hover::before,
 ul li:hover .item--link.has-sub-menu::after,
 ul li:hover .item--link.has-sub-menu::before {
     background: #0067a9;
+}
+
+.grouped-items {
+    position: relative;
+}
+
+.grouped-items--sub {
+    position: absolute;
+    background-color: #03a9f4;
+    height: 100%;
+    left: 0;
+    overflow: auto;
+    right: 0;
+    top: 0;
+    width: 100%;
+}
+
+.item--header {
+    color: #9adcfa;
+    cursor: pointer;
+    font-size: 0.9375rem;
+    padding-left: 1.25rem;
 }
 
 .item--link {
@@ -81,7 +144,8 @@ ul li:hover .item--link.has-sub-menu::before {
     line-height: 1.62;
     width: 100%;
 }
-
+.item--header.has-main-menu::after,
+.item--header.has-main-menu::before,
 .item--link.has-sub-menu::after,
 .item--link.has-sub-menu::before {
     content: '';
@@ -90,18 +154,30 @@ ul li:hover .item--link.has-sub-menu::before {
     height: 2px;
     margin-top: -1px;
     position: absolute;
-    top: 50%;
     width: 6px;
-    right: 15%;
 }
 
-.item--link.has-sub-menu::after {
+.item--header.has-main-menu::after,
+.item--header.has-main-menu::before {
+    left: 0;
+    top: 10%;
+    transform-origin: 0px 50%;
+}
+
+.item--link.has-sub-menu::after,
+.item--link.has-sub-menu::before {
+    right: 15%;
+    top: 50%;
     transform-origin: 6px 50%;
+}
+
+.item--header.has-main-menu::before,
+.item--link.has-sub-menu::after {
     transform: rotate(-45deg);
 }
 
+.item--header.has-main-menu::after,
 .item--link.has-sub-menu::before {
-    transform-origin: 6px 50%;
     transform: rotate(45deg);
 }
 </style>

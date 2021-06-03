@@ -18,3 +18,19 @@ h1, h2, h3, h4, h5 {
 .block--component {
     margin-top: 0.5rem;
 }
+
+
+/*
+Transitions
+*/
+.slide-enter-active,
+.slide-leave-active {
+    transition: all .3s linear;
+}
+.slide-enter {
+    transform: translateX(100%);
+}
+
+.slide-leave-to {
+    transform: translateX(100%);
+}

@@ -10,13 +10,6 @@
                     type="text"
                     v-model="header.text"
                 />
-                <label for="subListHeaderHrefField">HREF:</label>
-                <input
-                    @input="debounceSaveBlock"
-                    id="subListHeaderHrefField"
-                    type="text"
-                    v-model="header.href"
-                />
             </div>
             <label for="subListNumberOfItemsField">Number of list items:</label>
             <input
@@ -77,7 +70,6 @@ export default {
     data() {
         return {
             header: {
-                href: '',
                 text: ''
             },
             listContent: {
@@ -132,6 +124,7 @@ export default {
     padding-left: 1rem;
     margin: 1rem 0;
 }
+
 ul {
     padding: 0;
 }
