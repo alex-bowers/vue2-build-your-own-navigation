@@ -66,7 +66,7 @@ export default {
     },
     data() {
         return {
-            chosenSubList: null,
+            chosenSubList: null
         }
     },
     methods: {
@@ -109,6 +109,7 @@ ul li:hover {
 ul li:hover .item--link {
     color: #0067a9;
 }
+
 .item--header.has-main-menu:hover::after,
 .item--header.has-main-menu:hover::before,
 ul li:hover .item--link.has-sub-menu::after,
@@ -152,6 +153,7 @@ ul li:hover .item--link.has-sub-menu::before {
     line-height: 1.62;
     width: 100%;
 }
+
 .item--header.has-main-menu::after,
 .item--header.has-main-menu::before,
 .item--link.has-sub-menu::after,
