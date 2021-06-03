@@ -1,6 +1,9 @@
 <template>
     <li class="item--form">
         <span class="item--form--header">Item {{ itemNumber }}</span>
+        <button
+            @click.prevent="toggleListButton"
+        >{{ actionLabel }}</button>
         <span class="item--form--fields">
             <label for="listItemLabelField">Item Label:</label>
             <input
@@ -9,24 +12,37 @@
                 type="text"
                 v-model="label"
             />
-            <label for="listItemlHrefField">Item HREF:</label>
+            <label
+                v-if="!isEditingSubList"
+                for="listItemlHrefField"
+            >Item HREF:</label>
             <input
+                v-if="!isEditingSubList"
                 @input="debounceSaveBlock"
                 id="listItemlHrefField"
                 type="text"
                 v-model="href"
             />
         </span>
+        <SubListForm
+            v-if="isEditingSubList"
+            :list="subList"
+            :saveSubList="saveSubList"
+        />
     </li>
 </template>
 
 <script>
 import DebounceMixin from '../../mixins/debounce'
+import SubListForm from './SubListForm'
 
 export default {
     mixins: [
         DebounceMixin
     ],
+    components: {
+        SubListForm
+    },
     props: {
         itemNumber: {
             default: null,
@@ -40,7 +56,29 @@ export default {
     data() {
         return {
             href: '',
-            label: ''
+            isEditingSubList: false,
+            label: '',
+            subList: null
+        }
+    },
+    computed: {
+        actionLabel() {
+            return this.isEditingSubList
+                ? 'Remove Sub List'
+                : 'Add Sub List'
+        }
+    },
+    methods: {
+        saveSubList(list) {
+            this.subList = list
+            this.saveBlock()
+        },
+        toggleListButton() {
+            this.isEditingSubList = !this.isEditingSubList
+
+            if (!this.isEditingSubList) {
+                this.saveSubList(null)
+            }
         }
     }
 }

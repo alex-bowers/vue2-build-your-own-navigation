@@ -64,6 +64,10 @@ export default {
     padding: 1rem;
 }
 
+.navigation--column {
+    position: relative;
+}
+
 
 @media (min-width: 1024px) {
     .navigation {
