@@ -1,10 +1,10 @@
 <template>
-    <div>
+    <div class="nav-list">
         <a :href="$props.block.header.href">
             <h3>{{ $props.block.header.text }}</h3>
         </a>
-        <div class="grouped-items">
-            <div class="grouped-items--main">
+        <div class="nav-list--grouped-items">
+            <div class="nav-list--grouped-items--main">
                 <ul>
                     <li
                         v-for="(item, index) in $props.block.listContent"
@@ -27,10 +27,10 @@
                     </li>
                 </ul>
             </div>
-            <transition name="slide">
+            <transition name="fade">
                 <div
                     v-if="chosenSubList"
-                    class="grouped-items--sub"
+                    class="nav-list--grouped-items--sub"
                 >
                     <a @click.prevent="toggleSubList(null)">
                         <h4 class="item--header has-main-menu">
@@ -116,19 +116,30 @@ ul li:hover .item--link.has-sub-menu::before {
     background: #0067a9;
 }
 
-.grouped-items {
+.nav-list {
     position: relative;
 }
 
-.grouped-items--sub {
+.nav-list--grouped-items {
+    position: relative;
+    height: 100%;
+}
+
+.nav-list--grouped-items--main,
+.nav-list--grouped-items--sub {
+    height: 100%;
+}
+
+.nav-list--grouped-items--sub {
     position: absolute;
     background-color: #03a9f4;
-    height: 100%;
     left: 0;
-    overflow: auto;
     right: 0;
     top: 0;
     width: 100%;
+    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .item--header {
